@@ -3,6 +3,9 @@
 [![My Skills](https://skillicons.dev/icons?i=react,nodejs,js,html,css)](https://skillicons.dev)
 
 [For Services Click Here](https://github.com/Rchrdlss3/ShadesOfSound-Services)
+
+## Installation
+
 ## Project Structure
 ```
 .
