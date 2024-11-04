@@ -13,7 +13,8 @@ export const AlbumContext = createContext();
 const App = () => {
   const [theme,setTheme] = useState(new Theme());
   const [album,setAlbum] = useState(SpotifyAlbumClass);
-  const [searchedAlbums,setSearchedAlbums] = useState(searchedAlbumsClass)
+  const [searchedAlbums,setSearchedAlbums] = useState(searchedAlbumsClass);
+
   return (
     <div style = {mainStyles(theme)}>
     <ThemeContext.Provider value = {[theme,setTheme]}>

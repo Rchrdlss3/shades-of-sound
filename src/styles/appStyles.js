@@ -78,3 +78,15 @@ export const searchBarStyle = () => {
         borderRadius: '5px'
     }
 }
+
+export const buttonStyle = (hexCode) => {
+    const color = hexCode ? isLightHexCode(hexCode) ? '#000000' : '#eeeeee' : null
+    return {
+        background: 'none', 
+        borderRadius: '10px', 
+        boxShadow: 'none', 
+        border: `1px solid ${color}50`, 
+        color: color,
+        width: '50px'
+        }
+}

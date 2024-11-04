@@ -5,7 +5,7 @@
 [For Services Click Here](https://github.com/Rchrdlss3/ShadesOfSound-Services)
 
 ## Installation
-
+```npm i react-loading```
 ## Project Structure
 ```
 .

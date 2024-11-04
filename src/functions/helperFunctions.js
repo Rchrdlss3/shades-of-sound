@@ -10,3 +10,14 @@ export const isLightHexCode = (hexCode) => {
     }
     return false
 }
+
+export const debounce = (cb, delay = 300) => {
+    let timer;
+    return(...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {cb.apply(this,args)},delay)
+    }
+}
+
+export const processChange = debounce((func) => {func()});
+

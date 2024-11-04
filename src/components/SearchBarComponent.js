@@ -3,10 +3,12 @@ import { searchBarStyle } from "../styles/appStyles";
 import { spotifySearch } from "../functions/spotifyFunctions";
 import { SearchedContext } from "../App";
 import { searchedAlbumsClass } from "../classes/SpotifyClasses";
+import { debounce, processChange } from "../functions/helperFunctions";
 
 export default function SearchBarComponent () {
     const [search,setSearch] = useState('');
     const [searchedAlbums,setSearchedAlbums] = useContext(SearchedContext);
+
     return (
         <div>
             <input 
@@ -18,8 +20,7 @@ export default function SearchBarComponent () {
                 const value = e.target.value
                 setSearch(value)
                 if (value.length != 0 ) {
-                    spotifySearch(value,'album').then(res => setSearchedAlbums(res)
-                )
+                    processChange(() => spotifySearch(value,'album').then(res => setSearchedAlbums(res)))
                 } else {
                     setSearchedAlbums(searchedAlbumsClass)
                 }

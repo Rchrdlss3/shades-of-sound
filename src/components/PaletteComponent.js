@@ -1,17 +1,32 @@
 import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../App"
-import { paletteStyle, paletteWrapper } from "../styles/appStyles";
+import { buttonStyle, paletteStyle, paletteWrapper } from "../styles/appStyles";
 import { getColorExplanation } from "../functions/aiFunctions";
+import LoadingComponent from "./general/LoadingComponent";
+import { isLightHexCode } from "../functions/helperFunctions";
+import AIColorExplanationComponent from "./AIColorExplanationComponent";
 
 export default function PaletteComponent() {
     const [theme,setTheme] = useContext(ThemeContext);
     const [colorExplanation,setColorExplanation] = useState('');
+    const [loading,setIsLoading] = useState(Boolean);
+    const [explanationLoading,setExplanationLoading] = useState(false);
 
-    return (
+    useEffect(() => {
+        setIsLoading(true)
+        if (theme.palette[0].hex) {
+            getColorExplanation(theme.palette[0].hex)
+            .then(res => {
+                setColorExplanation(res.text)
+                setIsLoading(false)
+            })
+        }
+    },[theme.palette[0].hex])
+
+    return loading ?  <LoadingComponent /> : (
         <div style = {{width: '100%'}}>
             <div style = {{width: '90%', height: '50%', justifyContent: 'center', alignContent: 'center'}}>
-            <h1>AI Color Explanation</h1>
-            {colorExplanation != null || '' ? <p>{colorExplanation}</p> : <h1>CLick on any button to get an explanation of each color.</h1>}
+            <AIColorExplanationComponent colorExplanation={colorExplanation} explanationLoading={explanationLoading}/>
             
             </div>
         <div style = {paletteWrapper()}>
@@ -24,7 +39,13 @@ export default function PaletteComponent() {
                     {color.hex} 
                     <i className="fa fa-clipboard"></i>
                     </p>
-                    <button onClick = {() => {getColorExplanation(color.hex).then(res => setColorExplanation(res.text))}}>AI</button>
+                    <button style = {buttonStyle(color.hex)} onClick = {() => {
+                        setExplanationLoading(true)
+                        getColorExplanation(color.hex).then(res => {
+                            setColorExplanation(res.text)
+                            setExplanationLoading(false)
+                        })
+                        }}>AI</button>
                     </div>
             })}
         </div>
